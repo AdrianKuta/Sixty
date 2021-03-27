@@ -4,7 +4,7 @@ import useGetMovies from '../../api/use-get-movies.hook';
 import { CatalogContainer, CatalogWrapper } from './styles';
 import Grid from '../Grid/Grid';
 
-const Catalog = ({ genreId }) => {
+const Catalog = ({ genreId, onItemClick }) => {
   const [pageToLoad, setPageToLoad] = useState(1);
   const [fetchedMovies, setFetchedMovies] = useState([]);
   const { data, isLoading, error } = useGetMovies(genreId, pageToLoad);
@@ -27,7 +27,12 @@ const Catalog = ({ genreId }) => {
   return (
     <CatalogContainer>
       <CatalogWrapper>
-        <Grid movies={fetchedMovies} onLoadMore={onLoadMore} focusKey={'Grid'} />
+        <Grid
+          onItemClick={onItemClick}
+          movies={fetchedMovies}
+          onLoadMore={onLoadMore}
+          focusKey={'Grid'}
+        />
       </CatalogWrapper>
     </CatalogContainer>
   );
@@ -35,6 +40,7 @@ const Catalog = ({ genreId }) => {
 
 Catalog.propTypes = {
   genreId: PropTypes.number,
+  onItemClick: PropTypes.func,
 };
 
 export default Catalog;

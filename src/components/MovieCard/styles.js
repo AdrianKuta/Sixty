@@ -2,10 +2,11 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 export const CardWrapper = styled.div`
-  padding: 0.25rem;
+  margin: 0.25rem;
 `;
 
 export const CardInnerWrapper = styled.div`
+  transition: margin 0.25s;
   margin: ${({ focused }) => (focused ? '-0.2rem' : '0.25rem')};
   border: ${({ focused }) => (focused && '0.25rem solid orange')};
 `;

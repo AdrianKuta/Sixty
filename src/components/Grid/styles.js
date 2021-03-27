@@ -17,6 +17,6 @@ export const GridRowWrapper = styled.div`
   width: 100%;
 
   > * {
-    width: ${() => `${100 / 5}%`};
+    min-width: ${() => `${100 / 5}%`};
   }
 `;

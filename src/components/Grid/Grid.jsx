@@ -5,7 +5,7 @@ import { chunk } from 'lodash';
 import GridRow from './GridRow';
 import { useCallback, useMemo } from 'react';
 
-const Grid = ({ movies, onLoadMore, columns = 5 }) => {
+const Grid = ({ movies, onLoadMore, onItemClick, columns = 5 }) => {
   const scrollTo = ({ node }, { index }) => {
     node.scrollIntoView({ behavior: 'auto', block: 'center' });
     if (index === chunks.length - 2) {
@@ -24,6 +24,7 @@ const Grid = ({ movies, onLoadMore, columns = 5 }) => {
           key={`GridRow-${index}`}
           focusKey={`GridRow-${index}`}
           movies={chunk}
+          onItemClick={onItemClick}
         />
       )),
     [chunks],
@@ -40,6 +41,7 @@ Grid.propTypes = {
   movies: PropTypes.array,
   onLoadMore: PropTypes.func,
   columns: PropTypes.number,
+  onItemClick: PropTypes.func,
 };
 
 export default withFocusable()(Grid);

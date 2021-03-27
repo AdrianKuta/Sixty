@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { MenuContainer, MenuWrapper } from './styles';
 import { GenreModel } from '../../constants/propTypes/GenreModel';
 import MenuItem from './MenuItem';
@@ -16,18 +16,24 @@ const Menu = ({ selectedGenreId, genres, setFocus, onSelectedGenre }) => {
     }
   }, [genres]);
 
+  const MenuItems = useCallback(
+    () =>
+      Array.from(genres, (genreItem) => (
+        <MenuItem
+          onEnterPress={() => onItemClick(genreItem)}
+          key={genreItem.id}
+          genre={genreItem}
+          focusKey={genreItem.id}
+          selected={genreItem.id === selectedGenreId}
+        />
+      )),
+    [genres, selectedGenreId],
+  );
+
   return (
     <MenuContainer>
       <MenuWrapper>
-        {Array.from(genres, (genreItem) => (
-          <MenuItem
-            onEnterPress={() => onItemClick(genreItem)}
-            key={genreItem.id}
-            genre={genreItem}
-            focusKey={genreItem.id}
-            selected={genreItem.id === selectedGenreId}
-          />
-        ))}
+        <MenuItems />
       </MenuWrapper>
     </MenuContainer>
   );
