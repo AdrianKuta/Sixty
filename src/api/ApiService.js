@@ -1,4 +1,5 @@
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 const instance = axios.create({
   baseURL: 'https://api.themoviedb.org/3',
@@ -10,4 +11,19 @@ const instance = axios.create({
 export const fetchGenres = async () => {
   const { data } = await instance.get('/genre/movie/list');
   return data;
+};
+
+export const fetchMovies = async (genreId, page) => {
+  const { data } = await instance.get('/discover/movie', {
+    params: {
+      with_genres: genreId,
+      page,
+    },
+  });
+  return data;
+};
+
+fetchMovies.propType = {
+  genreId: PropTypes.number,
+  page: PropTypes.number,
 };

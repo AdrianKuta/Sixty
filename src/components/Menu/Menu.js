@@ -1,10 +1,28 @@
 import PropTypes from 'prop-types';
+import { FocusableMenuItem } from './MenuItem';
+import { withFocusable } from '@noriginmedia/react-spatial-navigation';
+import { useEffect } from 'react';
 
-const Menu = ({ genres }) => {
+const Menu = ({ genres, setFocus, onSelectedGenre }) => {
+  const onItemClick = (genre) => {
+    onSelectedGenre?.(genre);
+  };
+
+  useEffect(() => {
+    if (genres?.length) {
+      setFocus(genres[0].id);
+    }
+  }, [genres]);
+
   return (
     <div>
       {Array.from(genres, (genreItem) => (
-        <p>{genreItem.name}</p>
+        <FocusableMenuItem
+          onEnterPress={() => onItemClick(genreItem)}
+          key={genreItem.id}
+          genre={genreItem}
+          focusKey={genreItem.id}
+        />
       ))}
     </div>
   );
@@ -17,6 +35,8 @@ Menu.propTypes = {
       name: PropTypes.string,
     }),
   ),
+  setFocus: PropTypes.func,
+  onSelectedGenre: PropTypes.func,
 };
 
-export default Menu;
+export const FocusableMenu = withFocusable({ trackChildren: true })(Menu);

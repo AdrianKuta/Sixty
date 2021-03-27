@@ -5,7 +5,7 @@ const useGetGenres = () => {
   const { data, isLoading, error } = useQuery('genres', fetchGenres);
 
   return {
-    data: data.genres,
+    data: data?.genres ?? [],
     isLoading,
     error,
   };
