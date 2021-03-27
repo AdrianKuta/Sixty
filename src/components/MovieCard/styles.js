@@ -8,7 +8,7 @@ export const CardWrapper = styled.div`
 export const CardInnerWrapper = styled.div`
   transition: margin 0.25s;
   margin: ${({ focused }) => (focused ? '-0.2rem' : '0.25rem')};
-  border: ${({ focused }) => (focused && '0.25rem solid orange')};
+  border: ${({ focused }) => focused && '0.25rem solid orange'};
 `;
 
 CardInnerWrapper.propTypes = {

@@ -7,7 +7,7 @@ import Grid from '../Grid/Grid';
 const Catalog = ({ genreId, onItemClick }) => {
   const [pageToLoad, setPageToLoad] = useState(1);
   const [fetchedMovies, setFetchedMovies] = useState([]);
-  const { data, isLoading, error } = useGetMovies(genreId, pageToLoad);
+  const { data, isLoading } = useGetMovies(genreId, pageToLoad);
 
   useEffect(() => {
     setFetchedMovies([]);
