@@ -3,7 +3,9 @@ import { useQuery } from 'react-query';
 import { fetchMovies } from './ApiService';
 
 const useGetMovies = (genreId, page = 1) => {
-  const { data, isLoading, error } = useQuery(['movies', genreId, page], fetchMovies);
+  const { data, isLoading, error } = useQuery(['movies', genreId, page], () =>
+    fetchMovies(genreId, page),
+  );
 
   return {
     data,

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import useGetGenres from '../../api/use-get-genres.hook';
-import { FocusableMenu } from '../../components/Menu/Menu';
 import { BaseLayout } from './styles';
-import Grid from '../../components/Grid/Grid';
+import Catalog from '../../components/Catalog/Catalog';
+import Menu from '../../components/Menu/Menu';
 
 const Home = () => {
   const { data, isLoading, error } = useGetGenres();
@@ -10,8 +10,12 @@ const Home = () => {
 
   return (
     <BaseLayout>
-      <FocusableMenu onSelectedGenre={(genre) => setSelectedGenreId(genre.id)} genres={data} />
-      <Grid genreId={selectedGenreId} />
+      <Menu
+        selectedGenreId={selectedGenreId}
+        onSelectedGenre={(genre) => setSelectedGenreId(genre.id)}
+        genres={data}
+      />
+      <Catalog genreId={selectedGenreId} />
     </BaseLayout>
   );
 };

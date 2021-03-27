@@ -2,10 +2,11 @@ import PropTypes from 'prop-types';
 import { MenuItemStyled } from './styles';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
-const MenuItem = ({ genre, focused }) => {
+const MenuItem = ({ genre, focused, selected }) => {
   return (
-    <MenuItemStyled focused={focused}>
+    <MenuItemStyled focused={focused} selected={selected}>
       {genre.name}
+      {selected && ' >'}
     </MenuItemStyled>
   );
 };
@@ -16,6 +17,7 @@ MenuItem.propTypes = {
     name: PropTypes.string,
   }),
   focused: PropTypes.bool,
+  selected: PropTypes.bool,
 };
 
-export const FocusableMenuItem = withFocusable()(MenuItem);
+export default withFocusable()(MenuItem);

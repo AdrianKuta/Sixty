@@ -1,30 +1,45 @@
 import PropTypes from 'prop-types';
-import useGetMovies from '../../api/use-get-movies.hook';
-import { useEffect, useState } from 'react';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
+import { GridWrapper } from './styles';
+import { chunk } from 'lodash';
+import GridRow from './GridRow';
+import { useCallback, useMemo } from 'react';
 
-const Grid = ({ genreId }) => {
-  const [pageToLoad, setPageToLoad] = useState(1);
-  const [fetchedMovies, setFetchedMovies] = useState([]);
-  const { data, isLoading, error } = useGetMovies(genreId, pageToLoad);
-
-  useEffect(() => {
-    setFetchedMovies((old) => [...old, data.results]);
-  }, [data]);
-
-  const onLoadMore = () => {
-    if (!isLoading) {
-      setPageToLoad(data.page + 1);
+const Grid = ({ movies, onLoadMore, columns = 5 }) => {
+  const scrollTo = ({ node }, { index }) => {
+    node.scrollIntoView({ behavior: 'auto', block: 'center' });
+    if (index === chunks.length - 2) {
+      onLoadMore?.();
     }
   };
 
-  console.log(data);
+  const chunks = useMemo(() => chunk(movies, columns), [columns, movies]);
 
-  return <>{genreId}</>;
+  const GridRows = useCallback(
+    () =>
+      chunks.map((chunk, index) => (
+        <GridRow
+          index={index}
+          onBecameFocused={scrollTo}
+          key={`GridRow-${index}`}
+          focusKey={`GridRow-${index}`}
+          movies={chunk}
+        />
+      )),
+    [chunks],
+  );
+
+  return (
+    <GridWrapper>
+      <GridRows />
+    </GridWrapper>
+  );
 };
 
 Grid.propTypes = {
-  genreId: PropTypes.number,
+  movies: PropTypes.array,
+  onLoadMore: PropTypes.func,
+  columns: PropTypes.number,
 };
 
-export default withFocusable({ trackChildren: true })(Grid);
+export default withFocusable()(Grid);
