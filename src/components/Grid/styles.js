@@ -8,10 +8,12 @@ export const GridWrapper = styled.div`
   width: 100%;
 
   > * {
-    width: ${() => `${100 / 5}%`};
+    width: ${({ columns }) => `${100 / columns}%`};
+    min-width: ${({ columns }) => `${100 / columns}%`};
+    padding-top: ${({ columns }) => `${150 / columns}%`};
   }
 `;
 
 GridWrapper.propTypes = {
-  offset: PropTypes.number,
+  columns: PropTypes.number.isRequired,
 };

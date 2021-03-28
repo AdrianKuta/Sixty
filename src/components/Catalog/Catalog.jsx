@@ -28,6 +28,7 @@ const Catalog = ({ genreId, onItemClick, focusable = true }) => {
     <CatalogContainer>
       <CatalogWrapper>
         <Grid
+          columns={5}
           onItemClick={onItemClick}
           movies={fetchedMovies}
           onLoadMore={onLoadMore}

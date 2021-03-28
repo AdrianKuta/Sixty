@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { MenuContainer, MenuWrapper } from './styles';
 import { GenreModel } from '../../constants/propTypes/GenreModel';
 import MenuItem from './MenuItem';
@@ -16,7 +16,7 @@ const Menu = ({ selectedGenreId, genres, setFocus, onSelectedGenre }) => {
     }
   }, [genres]);
 
-  const MenuItems = useCallback(
+  const MenuItems = useMemo(
     () =>
       Array.from(genres, (genreItem) => (
         <MenuItem
@@ -32,9 +32,7 @@ const Menu = ({ selectedGenreId, genres, setFocus, onSelectedGenre }) => {
 
   return (
     <MenuContainer>
-      <MenuWrapper>
-        <MenuItems />
-      </MenuWrapper>
+      <MenuWrapper>{MenuItems}</MenuWrapper>
     </MenuContainer>
   );
 };

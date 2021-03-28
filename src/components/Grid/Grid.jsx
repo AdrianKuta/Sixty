@@ -13,7 +13,7 @@ const Grid = ({ movies, onLoadMore, onItemClick, focusable, columns = 5, setFocu
 
   const scrollTo = ({ node }, { index }) => {
     node.scrollIntoView({ behavior: 'auto', block: 'center' });
-    if (index > movies.length - columns * 2) {
+    if (index > movies.length - columns * 3) {
       onLoadMore?.();
     }
   };
@@ -34,7 +34,7 @@ const Grid = ({ movies, onLoadMore, onItemClick, focusable, columns = 5, setFocu
   );
 
   return (
-    <GridWrapper>
+    <GridWrapper columns={columns}>
       {Cards}
     </GridWrapper>
   );
