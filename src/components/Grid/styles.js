@@ -3,20 +3,15 @@ import PropTypes from 'prop-types';
 
 export const GridWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   width: 100%;
+
+  > * {
+    width: ${() => `${100 / 5}%`};
+  }
 `;
 
 GridWrapper.propTypes = {
   offset: PropTypes.number,
 };
-
-export const GridRowWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-
-  > * {
-    min-width: ${() => `${100 / 5}%`};
-  }
-`;

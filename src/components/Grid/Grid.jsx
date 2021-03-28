@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import { GridWrapper } from './styles';
-import { chunk } from 'lodash';
-import GridRow from './GridRow';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import MovieCard from '../MovieCard/MovieCard';
 
 const Grid = ({ movies, onLoadMore, onItemClick, focusable, columns = 5, setFocus }) => {
   useEffect(() => {
@@ -14,31 +13,29 @@ const Grid = ({ movies, onLoadMore, onItemClick, focusable, columns = 5, setFocu
 
   const scrollTo = ({ node }, { index }) => {
     node.scrollIntoView({ behavior: 'auto', block: 'center' });
-    if (index === chunks.length - 2) {
+    if (index > movies.length - columns * 2) {
       onLoadMore?.();
     }
   };
 
-  const chunks = useMemo(() => chunk(movies, columns), [columns, movies]);
-
-  const GridRows = useCallback(
+  const Cards = useMemo(
     () =>
-      chunks.map((chunk, index) => (
-        <GridRow
+      movies.map((movie, index) => (
+        <MovieCard
           index={index}
+          key={movie.id}
+          movie={movie}
+          focusKey={`GridItem-${index}`}
+          onEnterPress={onItemClick}
           onBecameFocused={scrollTo}
-          key={`GridRow-${index}`}
-          focusKey={`GridRow-${index}`}
-          movies={chunk}
-          onItemClick={onItemClick}
         />
       )),
-    [chunks],
+    [movies],
   );
 
   return (
     <GridWrapper>
-      <GridRows />
+      {Cards}
     </GridWrapper>
   );
 };

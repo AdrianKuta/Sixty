@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { initNavigation } from '@noriginmedia/react-spatial-navigation';
 
 initNavigation({
-  debug: false,
+  debug: true,
   visualDebug: false,
 });
 

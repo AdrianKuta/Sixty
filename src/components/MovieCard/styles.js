@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 export const CardWrapper = styled.div`
-  margin: 0.25rem;
+  margin: 0;
 `;
 
 export const CardInnerWrapper = styled.div`
