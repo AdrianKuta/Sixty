@@ -26,4 +26,4 @@ GridRow.propTypes = {
   onItemClick: PropTypes.func,
 };
 
-export default withFocusable({ forgetLastFocusedChild: true })(GridRow);
+export default withFocusable()(GridRow);

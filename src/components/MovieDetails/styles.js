@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 export const MovieDetailsContainer = styled.div`
   position: absolute;
@@ -65,3 +66,20 @@ export const Cover = styled.img.attrs(({ backdrop_path }) => ({
 Cover.propTypes = {
   backdrop_path: PropTypes.string,
 };
+
+export const ButtonsLayout = withFocusable()(styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-content: stretch;
+  margin-top: 1rem;
+
+  > * {
+    width: 100%;
+    margin-right: 1rem;
+  }
+
+  > *:last-child {
+    margin-right: 0;
+  }
+`);

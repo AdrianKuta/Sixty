@@ -5,11 +5,14 @@ import Catalog from '../../components/Catalog/Catalog';
 import Menu from '../../components/Menu/Menu';
 import MovieDetails from '../../components/MovieDetails/MovieDetails';
 import { KeyCodes } from '../../constants/KeyCodes';
+import useDelayedUndefinedState from '../../hooks/use-delayed-undefined-state.hook';
+import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 
 const Home = () => {
   const { data } = useGetGenres();
   const [selectedGenreId, setSelectedGenreId] = useState();
   const [selectedMovie, setSelectedMovie] = useState();
+  const [isMovieSelected, delayedSelectedMovie] = useDelayedUndefinedState(selectedMovie, 1000);
 
   const onItemClick = ({ movie }) => {
     setSelectedMovie(movie);
@@ -28,17 +31,20 @@ const Home = () => {
 
   return (
     <PageContainer>
-      <MovieDetails movie={selectedMovie} />
-      <BaseLayout collapsed={selectedMovie}>
+      {delayedSelectedMovie && (
+        <MovieDetails movie={delayedSelectedMovie} visible={isMovieSelected} />
+      )}
+      <BaseLayout collapsed={isMovieSelected}>
         <Menu
           selectedGenreId={selectedGenreId}
           onSelectedGenre={(genre) => setSelectedGenreId(genre.id)}
           genres={data}
+          focusable={!isMovieSelected}
         />
-        <Catalog genreId={selectedGenreId} onItemClick={onItemClick} />
+        <Catalog genreId={selectedGenreId} onItemClick={onItemClick} focusable={!isMovieSelected} />
       </BaseLayout>
     </PageContainer>
   );
 };
 
-export default Home;
+export default withFocusable()(Home);

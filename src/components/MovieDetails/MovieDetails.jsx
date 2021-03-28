@@ -1,6 +1,7 @@
 import { withFocusable } from '@noriginmedia/react-spatial-navigation';
 import { MovieModel } from '../../constants/propTypes/MovieModel';
 import {
+  ButtonsLayout,
   Column,
   ColumnLayout,
   Cover,
@@ -12,26 +13,18 @@ import {
 import PropTypes from 'prop-types';
 import { MetaInfoLayout } from './MetaInfo/styles';
 import MetaInfo from './MetaInfo/MetaInfo';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import Button from '../Button/Button';
 
-const MovieDetails = ({ movie }) => {
-  const [visible, setVisible] = useState(false);
-  const [visibleMovie, setVisibleMovie] = useState();
+const MovieDetails = ({ movie, visible, setFocus }) => {
   useEffect(() => {
-    if (movie) {
-      setVisible(true);
-      setVisibleMovie(movie);
-    } else {
-      setVisible(false);
-      const timeout = setTimeout(() => setVisibleMovie(undefined), 1000);
-      return () => clearTimeout(timeout);
-    }
-  }, [movie]);
+    setFocus();
+  }, []);
 
   return (
     <MovieDetailsContainer>
       <MovieDetailsWrapper visible={visible}>
-        <Title>{visibleMovie?.title}</Title>
+        <Title>{movie?.title}</Title>
         <ColumnLayout>
           <Column width={'66%'}>
             <MetaInfoLayout>
@@ -39,10 +32,15 @@ const MovieDetails = ({ movie }) => {
               <MetaInfo label={'Country'} value={'USA'} />
               <MetaInfo label={'Language'} value={'English'} />
             </MetaInfoLayout>
-            <Cover backdrop_path={visibleMovie?.backdrop_path} />
+            <Cover backdrop_path={movie?.backdrop_path} />
+            <ButtonsLayout>
+              <Button title={'Watch'} />
+              <Button title={'Trailer'} />
+              <Button title={'Add to list'} />
+            </ButtonsLayout>
           </Column>
           <Column width={'34%'}>
-            <Description>{visibleMovie?.overview}</Description>
+            <Description>{movie?.overview}</Description>
           </Column>
         </ColumnLayout>
       </MovieDetailsWrapper>
@@ -52,7 +50,13 @@ const MovieDetails = ({ movie }) => {
 
 MovieDetails.propTypes = {
   movie: MovieModel,
+  visible: PropTypes.bool,
   onPressKey: PropTypes.func,
+  setFocus: PropTypes.func,
+  updateAllSpatialLayouts: PropTypes.func,
+  stealFocus: PropTypes.func,
 };
 
-export default withFocusable()(MovieDetails);
+export default withFocusable({ blockNavigationOut: true, forgetLastFocusedChild: true })(
+  MovieDetails,
+);

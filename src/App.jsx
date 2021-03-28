@@ -4,7 +4,10 @@ import Home from './screens/Home/Home';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { initNavigation } from '@noriginmedia/react-spatial-navigation';
 
-initNavigation();
+initNavigation({
+  debug: false,
+  visualDebug: false,
+});
 
 const queryClient = new QueryClient();
 
