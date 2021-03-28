@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 import Button from '../Button/Button';
 
 const MovieDetails = ({ movie, visible, setFocus }) => {
+  console.log(movie);
   useEffect(() => {
     setFocus();
   }, []);
@@ -30,7 +31,7 @@ const MovieDetails = ({ movie, visible, setFocus }) => {
             <MetaInfoLayout>
               <MetaInfo label={'Duration'} value={'1h 20min'} />
               <MetaInfo label={'Country'} value={'USA'} />
-              <MetaInfo label={'Language'} value={'English'} />
+              <MetaInfo label={'Language'} value={movie?.original_language} />
             </MetaInfoLayout>
             <Cover backdrop_path={movie?.backdrop_path} />
             <ButtonsLayout>

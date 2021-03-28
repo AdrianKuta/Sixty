@@ -57,7 +57,7 @@ export const Description = styled.div`
 `;
 
 export const Cover = styled.img.attrs(({ backdrop_path }) => ({
-  src: `https://image.tmdb.org/t/p/w500/${backdrop_path}`,
+  src: `https://image.tmdb.org/t/p/original/${backdrop_path}`,
   loading: 'lazy',
 }))`
   width: 100%;
